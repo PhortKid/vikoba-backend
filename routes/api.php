@@ -21,7 +21,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+Route::get('/test',function(){
 
+ 
+
+ return response()->json([
+        'status'=>'true',
+        'message'=>'hii ni test'
+    ]);
+});
 
 //include auth.php for authentication routes
 //require __DIR__.'/auth.php';
