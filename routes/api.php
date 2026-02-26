@@ -19,17 +19,29 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
    Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
-});
 
-Route::get('/test',function(){
+
+    Route::get('/test',function(Request $request){
 
  
 
- return response()->json([
-        'status'=>'true',
-        'message'=>'hii ni test'
-    ]);
+ return response()->json(
+  
+    [
+        'status'  => true,
+        'message' => 'hii ni test ya '.$request->name
+    ]
+  
+);
+
+
 });
+
+
+
+});
+
+
 
 //include auth.php for authentication routes
 //require __DIR__.'/auth.php';
