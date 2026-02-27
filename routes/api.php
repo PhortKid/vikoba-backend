@@ -21,15 +21,28 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
 
-    Route::get('/test',function(Request $request){
+    Route::post('/test',function(Request $request){
 
  
 
  return response()->json(
+ 
   
     [
-        'status'  => true,
-        'message' => 'hii ni test ya '.$request->name
+        'user'  =>
+         [
+           [
+            'name'=>'john'
+
+         ],
+         [
+            'name'=>'juma'
+
+         ],
+
+         ]
+           
+        
     ]
   
 );
