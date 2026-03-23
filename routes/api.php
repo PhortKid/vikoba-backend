@@ -15,12 +15,16 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/users', [UsersManagementController::class, 'index']);
+//users management
+Route::middleware('auth:sanctum')->group(function () {
+Route::post('/users', [UsersManagementController::class, 'index']);
 Route::post('/save-user', [UsersManagementController::class, 'store']);
 Route::post('/fetch-user', [UsersManagementController::class, 'fetch']);
 Route::post('/update-user', [UsersManagementController::class, 'update']);
 Route::post('/delete-user', [UsersManagementController::class, 'delete']);
- 
+});
+
+
 Route::middleware('auth:sanctum')->group(function () {
    Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
