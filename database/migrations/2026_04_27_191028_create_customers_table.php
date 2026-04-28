@@ -16,18 +16,19 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('national_id')->nullable();
+   
+            $table->string('image')->nullable();
             $table->string('address')->nullable();
             //address
             $table->enum('gender', [
                 'male', 
                 'female', 
-                'other', 
+                'none', 
                 
-            ])->default('other');
+            ])->default('none');
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
-            $table->string('national_id')->unique()->nullable();
+            $table->string('national_id')->nullable()->unique();
             $table->enum('employment_type', [
                 'government', 
                 'private', 
