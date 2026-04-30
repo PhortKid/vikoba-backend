@@ -7,6 +7,10 @@ use App\Http\Controllers\UsersManagementController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GuarantorController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\LoanProductController;
+use App\Http\Controllers\LoanProductFeeController;
 /*
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -46,45 +50,59 @@ Route::post('/add_guarantor', [GuarantorController::class, 'save']);
 Route::post('/update_guarantor/{id}', [GuarantorController::class, 'update']);
 Route::post('/delete_guarantor/{id}', [GuarantorController::class, 'delete']);
 
+
+
+
 Route::middleware('auth:sanctum')->group(function () {
    Route::get('/user', [AuthController::class, 'user']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-
-
-    Route::post('/test',function(Request $request){
-
- 
-
- return response()->json(
- 
-  
-    [
-        'user'  =>
-         [
-           [
-            'name'=>'john'
-
-         ],
-         [
-            'name'=>'juma'
-
-         ],
-
-         ]
-           
-        
-    ]
-  
-);
-
-
+   Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
 
-});
 
 
 
-//include auth.php for authentication routes
-//require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| Company (Single Settings - NO LIST)
+|--------------------------------------------------------------------------
+*/
+Route::get('/company', [CompanyController::class, 'show']);
+Route::put('/company', [CompanyController::class, 'update']);
+
+/*
+|--------------------------------------------------------------------------
+| Branches (CRUD API)
+|--------------------------------------------------------------------------
+*/
+Route::get('/branches', [BranchController::class, 'index']);
+Route::post('/branches', [BranchController::class, 'store']);
+Route::get('/branches/{id}', [BranchController::class, 'show']);
+Route::put('/branches/{id}', [BranchController::class, 'update']);
+Route::delete('/branches/{id}', [BranchController::class, 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
+| Loan Products (CRUD API)
+|--------------------------------------------------------------------------
+*/
+Route::get('/loan-products', [LoanProductController::class, 'index']);
+Route::post('/loan-products', [LoanProductController::class, 'store']);
+Route::get('/loan-products/{id}', [LoanProductController::class, 'show']);
+Route::put('/loan-products/{id}', [LoanProductController::class, 'update']);
+Route::delete('/loan-products/{id}', [LoanProductController::class, 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
+| Loan Product Fees (CRUD API)
+|--------------------------------------------------------------------------
+*/
+Route::get('/loan-product-fees', [LoanProductFeeController::class, 'index']);
+Route::post('/loan-product-fees', [LoanProductFeeController::class, 'store']);
+Route::get('/loan-product-fees/{id}', [LoanProductFeeController::class, 'show']);
+Route::put('/loan-product-fees/{id}', [LoanProductFeeController::class, 'update']);
+Route::delete('/loan-product-fees/{id}', [LoanProductFeeController::class, 'destroy']);
+
+
