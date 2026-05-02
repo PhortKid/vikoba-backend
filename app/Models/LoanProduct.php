@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LoanProduct extends Model
 {
     protected $table = 'loan_products';
-    protected $primaryKey = 'LoanProductId';
+
 
     protected $fillable = [
         'CompanyId',

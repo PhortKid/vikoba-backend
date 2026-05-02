@@ -15,7 +15,7 @@ class BranchController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'CompanyId' => 'required|integer',
+          //  'CompanyId' => 'required|integer',
             'BranchCode' => 'required|unique:branches,BranchCode',
             'BranchName' => 'required|string',
             'Region' => 'nullable|string',

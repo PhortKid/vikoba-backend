@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     protected $table = 'branches';
-    protected $primaryKey = 'BranchId';
+   
 
     protected $fillable = [
-        'CompanyId',
+        //'CompanyId',
         'BranchCode',
         'BranchName',
         'Region',
@@ -38,10 +38,10 @@ class Branch extends Model
     ];
 
     // Branch belongs to Company
-    public function company()
+   /* public function company()
     {
         return $this->belongsTo(Company::class, 'CompanyId', 'CompanyId');
-    }
+    }*/
 
     // Branch has many Loan Products
     public function loanProducts()

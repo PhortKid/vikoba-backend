@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('CompanyId')->nullable();
+            //$table->unsignedBigInteger('CompanyId')->nullable();
             // Identity
             $table->string('BranchCode', 20)->unique();
             $table->string('BranchName', 100);

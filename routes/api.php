@@ -69,8 +69,8 @@ Route::middleware('auth:sanctum')->group(function () {
 | Company (Single Settings - NO LIST)
 |--------------------------------------------------------------------------
 */
-Route::get('/company', [CompanyController::class, 'show']);
-Route::put('/company', [CompanyController::class, 'update']);
+Route::get('/company-info', [CompanyController::class, 'show']);
+Route::put('/company-info', [CompanyController::class, 'update']);
 
 /*
 |--------------------------------------------------------------------------
@@ -78,10 +78,10 @@ Route::put('/company', [CompanyController::class, 'update']);
 |--------------------------------------------------------------------------
 */
 Route::get('/branches', [BranchController::class, 'index']);
-Route::post('/branches', [BranchController::class, 'store']);
-Route::get('/branches/{id}', [BranchController::class, 'show']);
-Route::put('/branches/{id}', [BranchController::class, 'update']);
-Route::delete('/branches/{id}', [BranchController::class, 'destroy']);
+Route::post('/save-branch', [BranchController::class, 'store']);
+Route::get('/fetch-branch/{id}', [BranchController::class, 'show']);
+Route::post('/update-branch/{id}', [BranchController::class, 'update']);
+Route::post('/delete-branch/{id}', [BranchController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------
