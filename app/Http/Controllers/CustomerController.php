@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -14,29 +15,35 @@ class CustomerController extends Controller
 
      public function save(Request $request)
     {
-        Customer::create(
-            [
-                'first_name'=>$request->first_name,
-                'middle_name'=>$request->middle_name,
-                'last_name'=>$request->last_name,
-                'national_id'=>$request->national_id,
-                'image'=>$request->image,
-                'address'=>$request->address,
-                'gender'=>$request->gender,
-                'mobile'=>$request->mobile,
-                'email'=>$request->email,
-          
-                'employment_type'=>$request->employment_type,
-                'salary'=>$request->salary
-            ]
-        );
+        $data = $request->validate([
+            'first_name'      => 'required|string|max:255',
+            'middle_name'     => 'nullable|string|max:255',
+            'last_name'       => 'required|string|max:255',
+            'national_id'     => 'required|string|max:255',
+            'image'           => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5120',
+            'address'         => 'nullable|string|max:1000',
+            'gender'          => 'nullable|in:male,female,none',
+            'mobile'          => 'nullable|string|max:50',
+            'email'           => 'nullable|email|max:255',
+            'employment_type' => 'nullable|in:government,private,student,business',
+            'salary'          => 'nullable|numeric'
+        ]);
 
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('customers', 'public');
+        }
+
+        $data['gender'] = $data['gender'] ?? 'none';
+        $data['employment_type'] = $data['employment_type'] ?? 'business';
+
+        Customer::create($data);
 
         return response()->json(
             [
-                'status'=>'success',
-                'message'=>'Customer Created'
-            ]
+                'status' => 'success',
+                'message' => 'Customer Created'
+            ],
+            201
         );
     }
 
@@ -51,19 +58,29 @@ class CustomerController extends Controller
         }
 
        
-        $customer->update([
-            'first_name'      => $request->first_name,
-            'middle_name'     => $request->middle_name,
-            'last_name'       => $request->last_name,
-            'national_id'     => $request->national_id,
-            'image'           => $request->image,
-            'address'         => $request->address,
-            'gender'          => $request->gender,
-            'mobile'          => $request->mobile,
-            'email'           => $request->email,
-            'employment_type' => $request->employment_type,
-            'salary'          => $request->salary
+        $data = $request->validate([
+            'first_name'      => 'sometimes|required|string|max:255',
+            'middle_name'     => 'nullable|string|max:255',
+            'last_name'       => 'sometimes|required|string|max:255',
+            'national_id'     => 'sometimes|required|string|max:255',
+         //   'image'           => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5120',
+            'address'         => 'nullable|string|max:1000',
+            'gender'          => 'sometimes|required|in:male,female,none',
+            'mobile'          => 'nullable|string|max:50',
+            'email'           => 'nullable|email|max:255',
+            'employment_type' => 'sometimes|required|in:government,private,student,business',
+            'salary'          => 'nullable|numeric'
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($customer->image && Storage::disk('public')->exists($customer->image)) {
+                Storage::disk('public')->delete($customer->image);
+            }
+
+            $data['image'] = $request->file('image')->store('customers', 'public');
+        }
+
+        $customer->update($data);
 
         return response()->json([
             'status'  => 'success',

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('loan_products', function (Blueprint $table) {
             $table->id();
             // Ownership
-            $table->unsignedBigInteger('CompanyId');
-            $table->unsignedBigInteger('BranchId')->nullable();
+           // $table->unsignedBigInteger('CompanyId')->nullable();
+           // $table->unsignedBigInteger('BranchId')->nullable();
             // Identity
             $table->string('ProductCode', 20)->unique();
             $table->string('ProductName', 100);

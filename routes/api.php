@@ -38,10 +38,10 @@ Route::get('/users', [UsersManagementController::class, 'index']);
 
 //customer management
 Route::get('/customers', [CustomerController::class, 'index']);
-Route::get('/view_customer/{id}', [CustomerController::class, 'view']);
-Route::post('/add_customer', [CustomerController::class, 'save']);
-Route::post('/update_customer/{id}', [CustomerController::class, 'update']);
-Route::post('/delete_customer/{id}', [CustomerController::class, 'delete']);
+Route::get('/customers/{id}', [CustomerController::class, 'view']);
+Route::post('/customers', [CustomerController::class, 'save']);
+Route::put('/customers/{id}', [CustomerController::class, 'update']);
+Route::delete('/customers/{id}', [CustomerController::class, 'delete']);
 
 //guarantors
 Route::get('/guarantors', [GuarantorController::class, 'index']);
@@ -88,11 +88,13 @@ Route::post('/delete-branch/{id}', [BranchController::class, 'destroy']);
 | Loan Products (CRUD API)
 |--------------------------------------------------------------------------
 */
+Route::middleware('auth:sanctum')->group(function () {
 Route::get('/loan-products', [LoanProductController::class, 'index']);
-Route::post('/loan-products', [LoanProductController::class, 'store']);
-Route::get('/loan-products/{id}', [LoanProductController::class, 'show']);
-Route::put('/loan-products/{id}', [LoanProductController::class, 'update']);
-Route::delete('/loan-products/{id}', [LoanProductController::class, 'destroy']);
+Route::post('/save-loan-product', [LoanProductController::class, 'store']);
+Route::get('/fetch-loan-product/{id}', [LoanProductController::class, 'show']);
+Route::put('/update-loan-product/{id}', [LoanProductController::class, 'update']);
+Route::delete('/delete-loan-product/{id}', [LoanProductController::class, 'destroy']);
+});
 
 /*
 |--------------------------------------------------------------------------

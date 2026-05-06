@@ -29,6 +29,6 @@ class LoanProductFee extends Model
     // Fee belongs to Loan Product
     public function loanProduct()
     {
-        return $this->belongsTo(LoanProduct::class, 'LoanProductId', 'LoanProductId');
+        return $this->belongsTo(LoanProduct::class, 'LoanProductId', 'id');
     }
 }

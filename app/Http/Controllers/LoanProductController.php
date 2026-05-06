@@ -17,9 +17,9 @@ class LoanProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'CompanyId' => 'required|integer',
-            'BranchId' => 'nullable|integer',
-            'ProductCode' => 'required|unique:loan_products,ProductCode',
+          //  'CompanyId' => 'required|integer',
+         //   'BranchId' => 'nullable|integer',
+         //   'ProductCode' => 'required',
             'ProductName' => 'required|string',
             'ProductDescription' => 'nullable|string',
             'MinLoanAmount' => 'required|numeric',
@@ -31,14 +31,34 @@ class LoanProductController extends Controller
             'RepaymentFrequency' => 'required|string',
             'CollateralRequired' => 'boolean',
             'CollateralPercent' => 'nullable|numeric',
+           
         ]);
 
-        $product = LoanProduct::create($data);
+        $nextId = (\App\Models\LoanProduct::max('id') ?? 0) + 1;
+        $productCode = 'PRO-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+
+        $product = LoanProduct::create([
+            'ProductCode' =>$productCode ,
+            'ProductName' => $request->ProductName,
+            'ProductDescription' => $request->ProductDescription,
+            'MinLoanAmount' => $request->MinLoanAmount,
+            'MaxLoanAmount' => $request->MaxLoanAmount,
+            'InterestRate' => $request->InterestRate,
+            'InterestType' => $request->InterestType,
+            'MinTermDays' => $request->MinTermDays,
+            'MaxTermDays' =>$request->MaxTermDays,
+            'RepaymentFrequency' =>$request->RepaymentFrequency,
+            'CollateralRequired' => $request->CollateralRequired,
+            'CollateralPercent' =>$request->CollateralPercent,
+            'CreatedBy' => auth()->id(),
+        ]);
 
         return response()->json([
             'message' => 'Loan product created successfully',
             'data' => $product
         ]);
+
+       
     }
 
     public function show($id)

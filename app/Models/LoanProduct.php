@@ -10,8 +10,8 @@ class LoanProduct extends Model
 
 
     protected $fillable = [
-        'CompanyId',
-        'BranchId',
+      //  'CompanyId',
+     //   'BranchId',
         'ProductCode',
         'ProductName',
         'ProductDescription',
@@ -25,6 +25,7 @@ class LoanProduct extends Model
         'CollateralRequired',
         'CollateralPercent',
         'Active',
+        'CreatedBy'
     ];
 
     protected $casts = [
